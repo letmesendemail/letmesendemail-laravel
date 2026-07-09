@@ -1,4 +1,7 @@
 # letmesend.email SDK for Laravel
+[![Packagist Downloads](https://img.shields.io/packagist/dt/letmesendemail/letmesendemail-laravel?style=for-the-badge&labelColor=000000)](https://packagist.org/packages/letmesendemail/letmesendemail-laravel)
+[![Packagist Version](https://img.shields.io/packagist/v/letmesendemail/letmesendemail-laravel?style=for-the-badge&labelColor=000000)](https://packagist.org/packages/letmesendemail/letmesendemail-laravel)
+[![License](https://img.shields.io/github/license/letmesendemail/letmesendemail-laravel?color=9cf&style=for-the-badge&labelColor=000000&cache=v1)](https://github.com/letmesendemail/letmesendemail-php/blob/master/LICENSE)
 
 The official Laravel package for the [letmesend.email](https://letmesend.email/) API.
 
