@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.2.0 — 2026-07-10
 
 - Reworked Laravel wrapper to accept `retries`, optional `TransportInterface`, or preconfigured
   core `Client` for testability and multi-tenant use.
