@@ -43,7 +43,6 @@ final class VerifyWebhookSignature
             abort(400, 'Webhook verification failed: ' . $e->getMessage());
         }
 
-        /** @phpstan-ignore-next-line */
         $request->attributes->set('letmesendemail_webhook_payload', $event);
 
         return $next($request);
