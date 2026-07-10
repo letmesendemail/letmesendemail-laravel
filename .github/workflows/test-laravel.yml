@@ -1,0 +1,63 @@
+name: Laravel CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - php-version: 8.1
+            laravel: ^10.0
+            testbench: ^8.17
+          - php-version: 8.2
+            laravel: ^11.0
+            testbench: ^9.0
+          - php-version: 8.3
+            laravel: ^12.0
+            testbench: ^10.8
+          - php-version: 8.4
+            laravel: ^13.0
+            testbench: ^11.0
+          - php-version: 8.5
+            laravel: ^13.0
+            testbench: ^11.0
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, intl, pcntl
+          ini-values: post_max_size=256M, memory_limit=2G
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Install dependencies
+        run: |
+          composer require \
+            illuminate/http:"${{ matrix.laravel }}" \
+            illuminate/support:"${{ matrix.laravel }}" \
+            orchestra/testbench:"${{ matrix.testbench }}" \
+            --no-update --no-interaction
+          composer update --prefer-dist --no-progress --no-interaction
+
+      - name: Run PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse -c phpstan.neon.dist
+
+      - name: Run Pest tests
+        run: vendor/bin/pest --colors=always

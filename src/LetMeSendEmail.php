@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace LetMeSendEmail\Laravel;
 
+use LetMeSendEmail\Client;
 use LetMeSendEmail\Configuration;
+use LetMeSendEmail\Http\TransportInterface;
 use LetMeSendEmail\Resources\ContactCategoriesResource;
 use LetMeSendEmail\Resources\ContactsResource;
 use LetMeSendEmail\Resources\DomainsResource;
@@ -13,44 +15,53 @@ use LetMeSendEmail\Resources\EmailTopicsResource;
 
 final class LetMeSendEmail
 {
-    private \LetMeSendEmail\LetMeSendEmail $client;
+    private Client $client;
 
     public function __construct(
         ?string $apiKey = null,
         ?string $baseUrl = null,
         ?int $timeout = null,
+        ?int $retries = null,
+        ?TransportInterface $transport = null,
+        ?Client $client = null,
     ) {
+        if ($client !== null) {
+            $this->client = $client;
+            return;
+        }
+
         $config = new Configuration(
             apiKey: $apiKey ?? '',
             baseUrl: $baseUrl,
             timeout: $timeout,
+            retries: $retries,
         );
 
-        $this->client = new \LetMeSendEmail\LetMeSendEmail(configuration: $config);
+        $this->client = new \LetMeSendEmail\Client($config, $transport ?? new \LetMeSendEmail\Http\GuzzleTransport(new \GuzzleHttp\Client()));
     }
 
     public function emails(): EmailsResource
     {
-        return $this->client->emails();
+        return new EmailsResource($this->client);
     }
 
     public function domains(): DomainsResource
     {
-        return $this->client->domains();
+        return new DomainsResource($this->client);
     }
 
     public function contacts(): ContactsResource
     {
-        return $this->client->contacts();
+        return new ContactsResource($this->client);
     }
 
     public function contactCategories(): ContactCategoriesResource
     {
-        return $this->client->contactCategories();
+        return new ContactCategoriesResource($this->client);
     }
 
     public function emailTopics(): EmailTopicsResource
     {
-        return $this->client->emailTopics();
+        return new EmailTopicsResource($this->client);
     }
 }
