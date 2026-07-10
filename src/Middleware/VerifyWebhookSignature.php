@@ -43,7 +43,7 @@ final class VerifyWebhookSignature
             abort(400, 'Webhook verification failed: ' . $e->getMessage());
         }
 
-        $request->attributes->set('letmesendemail_webhook_payload', $event);
+        $request->merge(['letmesendemail_webhook_payload' => $event]);
 
         return $next($request);
     }

@@ -75,7 +75,7 @@ test('webhook middleware stores verified payload on request', function () {
 
     $middleware = new VerifyWebhookSignature();
     $middleware->handle($request, function ($req) {
-        $stored = $req->attributes->get('letmesendemail_webhook_payload');
+        $stored = $req->input('letmesendemail_webhook_payload');
         expect($stored)->toBe(['event' => 'email.delivered', 'data' => ['id' => 'msg_1']]);
         return response('OK');
     });

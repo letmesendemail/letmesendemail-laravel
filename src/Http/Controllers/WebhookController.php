@@ -12,7 +12,7 @@ final class WebhookController extends Controller
 {
     public function __invoke(Request $request): \Illuminate\Http\JsonResponse
     {
-        $payload = $request->attributes->get('letmesendemail_webhook_payload');
+        $payload = $request->input('letmesendemail_webhook_payload');
 
         if (!is_array($payload)) {
             return response()->json(['error' => 'Webhook payload not verified.'], 400);
