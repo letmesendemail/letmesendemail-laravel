@@ -12,7 +12,6 @@ final class WebhookController extends Controller
 {
     public function __invoke(Request $request): \Illuminate\Http\JsonResponse
     {
-        /** @phpstan-ignore-next-line (Access to undefined property) */
         $payload = $request->attributes->get('letmesendemail_webhook_payload');
 
         if (!is_array($payload)) {

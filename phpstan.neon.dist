@@ -2,4 +2,6 @@ parameters:
     level: 6
     paths:
         - src/
+    scanDirectories:
+        - vendor/symfony/http-foundation
     treatPhpDocTypesAsCertain: false
