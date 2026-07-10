@@ -6,6 +6,9 @@ on:
       - master
   pull_request:
 
+env:
+  COMPOSER_POLICY: '{"advisories":{"block":false}}'
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -49,6 +52,8 @@ jobs:
           composer require \
             illuminate/http:"${{ matrix.laravel }}" \
             illuminate/support:"${{ matrix.laravel }}" \
+            --no-update --no-interaction
+          composer require --dev \
             orchestra/testbench:"${{ matrix.testbench }}" \
             --no-update --no-interaction
           composer update --prefer-dist --no-progress --no-interaction
