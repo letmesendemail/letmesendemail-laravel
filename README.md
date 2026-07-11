@@ -5,6 +5,12 @@
 
 The official Laravel package for the [letmesend.email](https://letmesend.email/) API.
 
+## Full Documentation
+
+See the comprehensive [user manual](docs/docs.md) for complete documentation of
+every resource, configuration option, mail transport, webhooks, error handling,
+and detailed examples.
+
 ## Requirements
 
 - PHP 8.1+
