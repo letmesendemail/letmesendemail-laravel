@@ -31,13 +31,13 @@ The service provider is registered automatically via Composer's Laravel auto-dis
 
 Set your API key in `.env`:
 
-```env
+```dotenv
 LETMESENDEMAIL_API_KEY=lms_live_your_api_key_here
 ```
 
 Optionally configure the base URL, timeout, and retries:
 
-```env
+```dotenv
 LETMESENDEMAIL_BASE_URL=https://letmesend.email/api/v1
 LETMESENDEMAIL_TIMEOUT=30
 LETMESENDEMAIL_RETRIES=3
@@ -45,7 +45,7 @@ LETMESENDEMAIL_RETRIES=3
 
 Webhook settings:
 
-```env
+```dotenv
 LETMESENDEMAIL_WEBHOOKS_ENABLED=true
 LETMESENDEMAIL_WEBHOOK_SECRET=whsec_your_signing_secret
 LETMESENDEMAIL_WEBHOOK_PATH=/webhooks/letmesendemail
@@ -410,7 +410,7 @@ Send emails through Laravel's mail system using the `letmesendemail` transport.
 
 ### Configuration
 
-```env
+```dotenv
 MAIL_MAILER=letmesendemail
 ```
 
@@ -632,7 +632,7 @@ error to be thrown immediately with no retry.
 
 ### Configuration
 
-```env
+```dotenv
 LETMESENDEMAIL_WEBHOOKS_ENABLED=true
 LETMESENDEMAIL_WEBHOOK_SECRET=whsec_your_signing_secret
 ```
@@ -659,11 +659,10 @@ class HandleLetMeSendEmailWebhook
 {
     public function handle(WebhookReceived $event): void
     {
-        match ($event->payload['event'] ?? '') {
-            'email.delivered' => // handle delivery
-            'email.bounced'   => // handle bounce
-            default           => // unknown event
-        };
+        $verifiedPayload = $event->payload;
+
+        // Pass the verified generic payload to your application-owned handler.
+        // Do not assume event names or fields that are not in the API contract.
     }
 }
 ```
