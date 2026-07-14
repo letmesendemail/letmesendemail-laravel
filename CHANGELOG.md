@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.2 — 2026-07-14
+
+- Added Laravel-style comments to the publishable configuration file explaining
+  every client and webhook option, including units, defaults, and behavior.
+- Updated the webhook documentation example to avoid assuming event names or
+  payload fields that are not defined by the public API contract.
+
 ## v0.2.0 — 2026-07-10
 
 - Reworked Laravel wrapper to accept `retries`, optional `TransportInterface`, or preconfigured
